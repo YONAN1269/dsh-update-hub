@@ -1,0 +1,61 @@
+{
+  "name": "dsh-update-hub",
+  "version": "0.1.0",
+  "license": "MIT",
+  "author": "Yonan",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/YONAN1269/dsh-update-hub.git"
+  },
+  "homepage": "https://github.com/YONAN1269/dsh-update-hub#readme",
+  "bugs": {
+    "url": "https://github.com/YONAN1269/dsh-update-hub/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "description": "批量更新 DSH 插件：左侧栏常驻图标显示待更新数量，点开是列表、进度与单条/全部更新。走 pnpm 安装侧、不经过桌面端的「移除在跑的插件」校验，所以在用的插件也能装上；支持启动时检测、定时检测与空闲自动更新。｜Batch-update DSH plugins from a permanent sidebar icon with a pending-count badge: list, real progress, per-plugin or all-at-once install. Uses the pnpm install path rather than the desktop host's remove-bundle route, so plugins that are currently running can still be updated. Optional checks at boot, on a timer, and unattended auto-update while idle.",
+  "keywords": [
+    "dsh-plugin",
+    "dsh",
+    "deepseek-harness",
+    "plugin",
+    "update",
+    "auto-update",
+    "pnpm",
+    "bundle-in-use"
+  ],
+  "type": "module",
+  "main": "lib/index.js",
+  "exports": {
+    ".": "./lib/index.js",
+    "./client": "./lib/client.js",
+    "./cordis.patch.yml": "./cordis.patch.yml",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "lib/index.js",
+    "lib/client.js",
+    "cordis.patch.yml",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "check": "node --check lib/index.js && node --check lib/client.js && npm pack --dry-run",
+    "test": "node tests/offline.mjs && node tests/render.mjs"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "platform": "web",
+      "inject": [
+        "@deepseek-ai/dsh-client-ui-conversation",
+        "@deepseek-ai/dsh-client-ui-settings",
+        "@deepseek-ai/dsh-client-locale"
+      ]
+    }
+  }
+}
